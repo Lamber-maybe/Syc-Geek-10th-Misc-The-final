@@ -1,13 +1,27 @@
 # Syc Geek 10th -- Misc -- The final 出题心得 && WriteUp
 
+首先，由衷的感谢 [Unity_404](https://github.com/macc1989)，[0xSw0rder](https://github.com/F1rek1king)，[AFKL](https://github.com/AFKL-CUIT)，[Spark1e](https://github.com/SSPARKLE) 四位师父与我共同完成这道题目的策划，并且在题目编写中付出了巨大努力。
+
+对该题目有兴趣的师父可以从下面的链接下载到该题目（**永久有效**）
+```
+链接：https://pan.baidu.com/s/1mAa0dYs4lILg_tE6h0Qy-A 
+提取码：h8rt 
+```
+
 ## 一、出题心得
 ### 出题背景
 起初出这个题的时候主要是为了让外校的师傅能有一点玩头（毕竟一个主要面向新生的比赛，可能老师傅们做起来会感觉索然无味）。
+
 所以这个题目在初步规划的时候就画了一个很大的饼，预期设计10个part左右，然后环环相扣，再辅以一个完整剧本。
+
 但实际出题的时候，发现如果规模过大的话，最后对题目进行测试时会非常麻烦，而且一旦出了bug，会牵动到很多部分，修补起来也会异常困难。
+
 所以在与几位小伙伴商量之下，决定控制在5个part左右，以达到题目的最优性能。
+
 而对于每个part之间的剧情联系，尽量降到最低。方便每个part单独管理，这样在出了bug的情况下，不至于动辄修补整个题目。
+
 但有点可惜的是，题目出好了之后，刚好是hxb跟hmb举办的时候。很多师傅都去肝那两个比赛了。这道题也无人问津。
+
 最后就只能留给新生解了，不过也是预期之中，新生没有一个解出来的。
 
 ### 出题流程
@@ -15,8 +29,11 @@
 > This article is about the programming language. For the eighth circle of hell in Dante's Inferno, see Malebolge.
  
 可以看到这个语言跟但丁的神曲有点关系，而神曲有三部。地狱 -- 炼狱 -- 天堂，刚好可以作为题目剧本。说干就干！
+
 然后在选择题目载体的时候，最开始计划直接用zip，但是会显得题目有点干燥。所以选择使用了VMDK文件作为载体。（也考虑过使用vmem，但奈何vmem题目的解题操作实在繁琐，可能会影响做题体验）
+
 然后就将每个部分出好之后，放入win7虚拟机（注意我并没有将题目文件放入同一个目录下，而是根据每一个部分的题目文件所具备的特性，放入了比较适合那个文件的文件目录）
+
 一切准备好之后，将VMware虚拟机目录下的VMDK文件打包成压缩包，然后上传至云盘。整个题目就算出好了
 
 
@@ -51,7 +68,9 @@ KJIHGFEDCBA@VUTYXWVUTSRKoON0LKDCgfS
 ## 三、NTFS --> Door
 ### 解题思路
 入手VMDK文件, 推荐最简单快捷的方式是利用 `7-zip` 压缩软件解压。
+
 解压之后，可以看到是一个完整的Windows目录。在桌面目录下，我们可以看到有一个 `Door.png` 内容为 `我不入地狱，谁入地狱`。可以想到此处应该是整个故事的起始点。
+
 但经过各种图片隐写的尝试之后，发现并没有任何效果。回去看 `Something useful` 在这个地方有可能出现的只有 `NTFS`。
 
 ### 处理NTFS流 --> Purgatory.exe
@@ -72,12 +91,16 @@ KJIHGFEDCBA@VUTYXWVUTSRKoON0LKDCgfS
 
 ### 将NTFS提取出的文件，在炼狱中执行
 上一个part里面，我们执行了从NTFS里面提取出来的Purgatory.exe。其中一个提示是放入炼狱中执行。
+
 我们在 `Windows7_by_Lamber.vmdk\Program Files (x86)\Linux\` 目录下找到了我们的炼狱（Purgatorio）
+
 将Purgatory.exe放入该目录，执行得到结果如下
 ```
 智慧之神evoA说，你需要修复ELF
 ```
+
 同时这里有一个小坑，运行之后会把该目录下的elf文件删除（2333）
+
 注意这里的 `evoA` 如果有脑洞厉害的同学，在接下来的解题过程中能用上。脑洞不够大也没关系，对解题影响不大。
 
 ### 解题思路
@@ -236,8 +259,11 @@ https://res.cloudinary.com/macc1989/raw/upload/v1573149768/samples/Purgatorio%E8
 
 ### 解题思路
 首先我们在download目录下，找到我们的pdf文件。
+
 在上一个 `ELF part` 中，最后会拿到一串密文 `pdfkG@0zl_3ptmVPfa7LHuB8rs#cRdi$` 观察密文，开头几位是pdf，说明这串密文应该是pdf的密码。
+
 解开pdf之后，可以看到一串密文。
+
 ![](https://i.imgur.com/c42H3Ye.png)
 
 该密文为键盘密码，对照笔记本键盘翻译密文得到明文如下
@@ -246,17 +272,23 @@ The password of word is capital(proverbs of god)
 ```
 
 拿到word部分的密码 `PROVERBS OF GOD` 。
+
 注意这里有一个坑点，根据前文推测，表情包代表一个空格。所以在密码中间是有空格的。
 
 ## 六、Word --> Purgatory.docm
 ### 解题思路
 首先我们在documents目录下，找到包含我们word文件的zip压缩包。
+
 利用上一个 `PDF part` 中得到的密码，解开压缩包，拿到word。
+
 打开之后，发现是一篇十六进制码。复制粘贴到010 editor中，可以看到有一个jpg文件头。根据 `NTFS part` 中的信息，该图片的文件头是被修改过的，正确文件头应该是png文件头。
+
 修补好图片之后，还可以注意到，word文档提醒我们是否启用宏。说明这个word的宏部分有内容。查看宏模块
+
 ![](https://i.imgur.com/2yVLjzN.png)
 
 发现有很长一段base64，此处采用的是一种叫base64隐写的隐藏信息的方式。
+
 解密脚本如下
 ```python=
 # base64steg_decode.py
@@ -276,7 +308,9 @@ with open('1.txt', 'rb') as f:
 ```
 
 现在我们手上就有一个png图片，和一个密码 `Hidden1nWord_` 
+
 根据密码句意隐藏在word文件中，而word文档中我们找到的文件只有一个png图片。
+
 这时候想到使用带密码的lsb隐写(https://github.com/livz/cloacked-pixel) 解码得到
 ```
 The password of paradise:Bliss_Syc!!!!
@@ -288,9 +322,12 @@ The password of paradise:Bliss_Syc!!!!
 
 ### 解题思路
 收集信息，了解“.osz”后缀名及其编辑器，继续收集hint寻找解题方法，最终组合出flag。
+
 ### 处理“.osz”文件及其解压缩文件
 在最后一部分可以获得一个名为paradise.osz的文件。查看其文件头会发现是zip格式。用zip格式解压后发现以下文件：
+
 ![](https://i.imgur.com/dgYwVgO.png)
+
 #### AFKL - The final test (Syclover) [ascend to heaven].osu
 其中AFKL - The final test (Syclover) [ascend to heaven].osu文件可以使用记事本等编辑器打开，可以发现以下数据：
 ```
@@ -305,25 +342,37 @@ Source:av33029948?p=6 bilibili
 Tags:GEEK FLAG TIMEBASE README 36112Start md5ed CircleAndSlider
 ```
 发现在Source中给了我们一个名为bilibili的视频网站的视频编号。浏览后发现其为介绍一款名为osu!的音乐游戏中自带的铺面编辑器。这提示我们应该用osu!来打开、编辑osz文件。
+
 如果先去了解osz文件，也可以发现其实为音乐游戏osu!的铺面文件。那么接下来便是去用osu!来打开osz文件。这样做的人需要注意到在刚使用osu!打开后可以在左上角发现“av33029948?p=6 bilibili”：
+
 ![](https://i.imgur.com/qd70u8m.jpg)
+
 但这样做的人是很难联想到去寻找解压后的铺面文件，为后期的解题带来困难。
 
 #### readme.jpg
 在解压的文件中还有一个readme.jpg打开后是正常图片。使用010eidtor打开。在文件尾部发现以下信息：
+
 ![](https://i.imgur.com/XOXUB1Y.png)
+
 其中“in map”提示我们flag在铺面中。后面则给了一堆数字以及“Syc{}”，还有“Traversing.Time”。再结合“AFKL - The final test (Syclover) [ascend to heaven].osu”文件中tags所给的信息。我们可以发现，hint中大量提及了时间。不难想到这些数字的真正意味是“时间”。
+
 ### 使用编辑器寻找flag
 现在用编辑器打开铺面。
+
 在编辑器中，我们可以发现在左下角有“00:00:000”，可推测其代表的是时间。对照readme.jpg的数字，将其移动至对应时间。
+
 首先第一组数字，我们可以发现滑条的形状组成了“S”，与之前在readme.jpg里数字后的“S”相符。
+
 这个代表S![](https://i.imgur.com/dEXe55X.jpg)
 
 再测试第二组，发现滑条的形状符合第二组数字后的“y”。
+
 这个代表y![](https://i.imgur.com/9jHM5xx.jpg)
 
 由此我们可以确定解题方向为“数字=>时间=>字符”。
+
 接下来直接按顺序展示第二组以后每个时间点的元件摆放方式及其所代表的字符。
+
 这个代表c![](https://i.imgur.com/YEGQ95f.jpg)
 
 这个代表{![](https://i.imgur.com/gFdr6aJ.jpg)
@@ -398,4 +447,5 @@ Tags:GEEK FLAG TIMEBASE README 36112Start md5ed CircleAndSlider
 ```
 Syc{469ca48e237f59d6f847c623ceef5777}
 ```
+
 当然，我不排除部分人可能会在没有获得时间信息的情况下，发现滑条组成了字母，并用此直接拼接出flag。但这样是不可能行得通的。首先，在铺面中除了flag所包含的字符外，还有一些假字符，在没有获得时间的hint下是不可能略过它们的。其次，表示字符的不单单有滑条，还有单个的圆圈，在没有获得时间的hint下是一定会略过它们的。
